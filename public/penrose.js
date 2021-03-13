@@ -1,5 +1,3 @@
-import css from "./style.css";
-
 const chevrons = false;
 const penrose = true;
 
