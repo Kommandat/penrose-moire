@@ -48,7 +48,7 @@ const RSide = function (from, to, pattern) {
   this.draw = function () {
     const path = new Path();
     path.strokeColor = new Color(0, 0, 0, 0.5);
-    path.strokeWidth = 0.5;
+    path.strokeWidth = 0.2;
     path.moveTo(from);
     path.lineTo(to);
 
@@ -205,27 +205,45 @@ width = 300;
 length = width * (2 / 3);
 basePoint = new Point(width / 6, width * (2 / 3));
 
-fixed = new PenroseTiling(view.center, length, 3);
-fixed.draw();
+firstPenrose = new PenroseTiling(view.center, length, 3);
+firstPenrose.draw();
 
-draggable = new PenroseTiling(view.center + [0, 100], length, 3);
-draggable.draw();
+var staticLayer = project.layers[0];
+var draggableLayer = new Layer();
+
+secondPenrose = new PenroseTiling(view.center + [0, 100], length, 3);
+secondPenrose.draw();
 
 function onMouseDrag(event) {
-  draggable.translate(event.point - draggable.basePoint);
-  project.clear();
-  fixed.draw();
-  draggable.draw();
+  draggableLayer.position += event.delta;
+  // draggable.translate(event.point - draggable.basePoint);
+  // project.clear();
+  // fixed.draw();
+  // draggable.draw();
 }
 
 function onKeyUp(event) {
   if (event.key === "space") {
-    console.log("We here");
-    draggable.deflate();
-    fixed.deflate();
+    firstPenrose.deflate();
+    secondPenrose.deflate();
 
-    project.clear();
-    draggable.draw();
-    fixed.draw();
+    var draggableLayerPosition = draggableLayer.position;
+    project.layers.forEach((layer) => layer.removeChildren());
+
+    staticLayer.activate();
+    firstPenrose.draw();
+    draggableLayer.activate();
+    secondPenrose.draw();
+    draggableLayer.position = draggableLayerPosition;
+
+    staticLayer.activate();
+    var staticImage = staticLayer.rasterize();
+    draggableLayer.activate();
+    var draggableImage = draggableLayer.rasterize();
+
+    project.layers.forEach((layer) => layer.removeChildren());
+
+    staticLayer.addChild(staticImage);
+    draggableLayer.addChild(draggableImage);
   }
 }
