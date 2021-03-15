@@ -161,7 +161,7 @@ const PenroseTiling = function (basePoint, length, pattern) {
   };
 };
 
-width = 300;
+width = view.viewSize.width / 2;
 length = width * (2 / 3);
 basePoint = new Point(width / 6, width * (2 / 3));
 
@@ -173,7 +173,7 @@ var draggableLayer = new Layer();
 
 secondPenrose = new PenroseTiling(view.center, length, 3);
 secondPenrose.draw();
-draggableLayer.position += [0, 100];
+draggableLayer.position += unitPoint((3 * PI) / 10) * (width / 3);
 
 console.log(staticLayer.position);
 console.log(draggableLayer.position);
