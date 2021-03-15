@@ -211,15 +211,15 @@ firstPenrose.draw();
 var staticLayer = project.layers[0];
 var draggableLayer = new Layer();
 
-secondPenrose = new PenroseTiling(view.center + [0, 100], length, 3);
+secondPenrose = new PenroseTiling(view.center, length, 3);
 secondPenrose.draw();
+draggableLayer.position += [0, 100];
+
+console.log(staticLayer.position);
+console.log(draggableLayer.position);
 
 function onMouseDrag(event) {
   draggableLayer.position += event.delta;
-  // draggable.translate(event.point - draggable.basePoint);
-  // project.clear();
-  // fixed.draw();
-  // draggable.draw();
 }
 
 function onKeyUp(event) {
@@ -246,4 +246,9 @@ function onKeyUp(event) {
     staticLayer.addChild(staticImage);
     draggableLayer.addChild(draggableImage);
   }
+}
+
+function onResize(event) {
+  staticLayer.position += event.delta;
+  draggableLayer.position += event.delta;
 }
