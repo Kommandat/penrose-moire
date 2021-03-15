@@ -1,27 +1,7 @@
-const chevrons = false;
-const penrose = true;
-
 const TWO_PI = 2 * Math.PI;
 const PI = Math.PI;
 
 const unitPoint = (angle) => new Point(Math.cos(angle), Math.sin(angle));
-
-const Chevron = function (point, angle, length) {
-  this.point = point;
-  this.angle = angle;
-  this.length = length;
-
-  this.draw = function () {
-    const start = this.point + unitPoint(this.angle - TWO_PI / 3) * this.length;
-    const end = this.point + unitPoint(this.angle + TWO_PI / 3) * this.length;
-
-    const path = new Path();
-    path.strokeColor = "black";
-    path.moveTo(start);
-    path.lineTo(this.point);
-    path.lineTo(end);
-  };
-};
 
 const RSide = function (from, to, pattern) {
   this.from = from;
@@ -32,29 +12,12 @@ const RSide = function (from, to, pattern) {
   this.length = this.vector.length;
   this.angle = this.vector.angle * (TWO_PI / 360);
 
-  this.chevrons = [];
-
-  let chevPoint;
-  let step = this.length / 12;
-  let chevLength = this.length / 2 - step * ((this.pattern - 1) / 2);
-  let chevWidth = 8;
-
-  for (let i = 0; i < this.pattern; i++) {
-    chevPoint = new Point(this.from + unitPoint(this.angle) * chevLength);
-    this.chevrons.push(new Chevron(chevPoint, this.angle, chevWidth));
-    chevLength += step;
-  }
-
   this.draw = function () {
     const path = new Path();
     path.strokeColor = new Color(0, 0, 0, 0.5);
     path.strokeWidth = 0.2;
     path.moveTo(from);
     path.lineTo(to);
-
-    if (chevrons) {
-      this.chevrons.forEach((chev) => chev.draw());
-    }
   };
 };
 
@@ -64,15 +27,12 @@ const RTriangle = function (side1, side2, side3) {
   this.pattern = this.sides[2].pattern;
 
   this.draw = function () {
-    this.sides.forEach((side) => {
-      if (penrose) {
-        if (!(side.pattern === 3 || side.pattern === 4)) {
-          side.draw();
-        }
-      } else {
-        side.draw();
-      }
-    });
+    const path = new Path();
+    path.strokeColor = new Color(0, 0, 0, 0.5);
+    path.strokeWidth = 0.2;
+    path.add(this.sides[2].from, this.sides[2].to);
+    path.insert(1, this.sides[1].from);
+    // path.closed = true;
   };
 
   this.deflate = function () {
