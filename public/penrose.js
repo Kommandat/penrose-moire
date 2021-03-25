@@ -185,26 +185,20 @@ function onMouseDrag(event) {
 function onKeyUp(event) {
   if (event.key === "space") {
     firstPenrose.deflate();
-    secondPenrose.deflate();
 
     var draggableLayerPosition = draggableLayer.position;
     project.layers.forEach((layer) => layer.removeChildren());
 
     staticLayer.activate();
     firstPenrose.draw();
-    draggableLayer.activate();
-    secondPenrose.draw();
-    draggableLayer.position = draggableLayerPosition;
 
-    staticLayer.activate();
     var staticImage = staticLayer.rasterize();
-    draggableLayer.activate();
-    var draggableImage = draggableLayer.rasterize();
 
     project.layers.forEach((layer) => layer.removeChildren());
 
     staticLayer.addChild(staticImage);
-    draggableLayer.addChild(draggableImage);
+    draggableImage = staticImage.copyTo(draggableLayer);
+    draggableLayer.position = draggableLayerPosition;
   }
 }
 
