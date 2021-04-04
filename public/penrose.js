@@ -161,7 +161,42 @@ const PenroseTiling = function (basePoint, length, pattern) {
   };
 };
 
-width = view.viewSize.width / 2;
+function onMouseDrag(event) {
+  draggableLayer.position += event.delta;
+}
+
+function onKeyUp(event) {
+  if (event.key === "space") {
+    deflatePenroseTilings();
+  }
+}
+
+function deflatePenroseTilings() {
+  firstPenrose.deflate();
+
+  var draggableLayerPosition = draggableLayer.position;
+  project.layers.forEach((layer) => layer.removeChildren());
+
+  staticLayer.activate();
+  firstPenrose.draw();
+
+  var staticImage = staticLayer.rasterize();
+
+  project.layers.forEach((layer) => layer.removeChildren());
+
+  staticLayer.addChild(staticImage);
+  draggableImage = staticImage.copyTo(draggableLayer);
+  draggableLayer.position = draggableLayerPosition;
+}
+
+function onResize(event) {
+  staticLayer.position += event.delta;
+  draggableLayer.position += event.delta;
+}
+
+minViewDimension = Math.max(view.viewSize.width, view.viewSize.height);
+
+width = minViewDimension / 2;
 length = width * (2 / 3);
 basePoint = new Point(width / 6, width * (2 / 3));
 
@@ -175,34 +210,4 @@ secondPenrose = new PenroseTiling(view.center, length, 3);
 secondPenrose.draw();
 draggableLayer.position += unitPoint((3 * PI) / 10) * (width / 3);
 
-console.log(staticLayer.position);
-console.log(draggableLayer.position);
-
-function onMouseDrag(event) {
-  draggableLayer.position += event.delta;
-}
-
-function onKeyUp(event) {
-  if (event.key === "space") {
-    firstPenrose.deflate();
-
-    var draggableLayerPosition = draggableLayer.position;
-    project.layers.forEach((layer) => layer.removeChildren());
-
-    staticLayer.activate();
-    firstPenrose.draw();
-
-    var staticImage = staticLayer.rasterize();
-
-    project.layers.forEach((layer) => layer.removeChildren());
-
-    staticLayer.addChild(staticImage);
-    draggableImage = staticImage.copyTo(draggableLayer);
-    draggableLayer.position = draggableLayerPosition;
-  }
-}
-
-function onResize(event) {
-  staticLayer.position += event.delta;
-  draggableLayer.position += event.delta;
-}
+deflatePenroseTilings();
