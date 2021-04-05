@@ -205,8 +205,8 @@ function deflatePenroseTilings() {
 }
 
 function onResize(event) {
-  staticLayer.position += event.delta;
-  draggableLayer.position += event.delta;
+  staticLayer.position += event.delta / 2;
+  draggableLayer.position += event.delta / 2;
 }
 
 var background = new Path.Rectangle(view.bounds);
