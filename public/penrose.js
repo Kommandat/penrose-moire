@@ -3,6 +3,12 @@ const PI = Math.PI;
 
 const unitPoint = (angle) => new Point(Math.cos(angle), Math.sin(angle));
 
+var arePenroseLines = false;
+var penroseLineColor = new Color(0, 0, 0, 0);
+var isPenroseFill = true;
+var penroseLargeRhombusColor = "#1EE69C";
+var penroseSmallRhombusColor = "#9C3E16";
+
 const RSide = function (from, to, pattern) {
   this.from = from;
   this.to = to;
@@ -14,10 +20,14 @@ const RSide = function (from, to, pattern) {
 
   this.draw = function () {
     const path = new Path();
-    path.strokeColor = new Color(0, 0, 0, 0.5);
-    path.strokeWidth = 0.2;
+    path.strokeColor = penroseLineColor;
+    path.strokeWidth = arePenroseLines ? 0 : 0.2;
     path.moveTo(from);
     path.lineTo(to);
+    if (isPenroseFill) {
+      path.fillColor =
+        pattern === 4 ? penroseLargeRhombusColor : penroseSmallRhombusColor;
+    }
   };
 };
 
@@ -28,11 +38,16 @@ const RTriangle = function (side1, side2, side3) {
 
   this.draw = function () {
     const path = new Path();
-    path.strokeColor = new Color(0, 0, 0, 0.5);
-    path.strokeWidth = 0.2;
+    path.strokeColor = penroseLineColor;
+    path.strokeWidth = arePenroseLines ? 0.2 : 0;
     path.add(this.sides[2].from, this.sides[2].to);
     path.insert(1, this.sides[1].from);
-    // path.closed = true;
+    if (isPenroseFill) {
+      path.fillColor =
+        this.pattern === 4
+          ? penroseLargeRhombusColor
+          : penroseSmallRhombusColor;
+    }
   };
 
   this.deflate = function () {
@@ -194,9 +209,12 @@ function onResize(event) {
   draggableLayer.position += event.delta;
 }
 
+var background = new Path.Rectangle(view.bounds);
+background.fillColor = "white";
+
 minViewDimension = Math.max(view.viewSize.width, view.viewSize.height);
 
-width = minViewDimension / 2;
+width = minViewDimension / 2.5;
 length = width * (2 / 3);
 basePoint = new Point(width / 6, width * (2 / 3));
 
@@ -211,3 +229,6 @@ secondPenrose.draw();
 draggableLayer.position += unitPoint((3 * PI) / 10) * (width / 3);
 
 deflatePenroseTilings();
+
+staticLayer.blendMode = "color";
+draggableLayer.blendMode = "color";
