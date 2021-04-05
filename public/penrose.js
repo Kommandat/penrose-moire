@@ -17,18 +17,6 @@ const RSide = function (from, to, pattern) {
   this.vector = this.to - this.from;
   this.length = this.vector.length;
   this.angle = this.vector.angle * (TWO_PI / 360);
-
-  this.draw = function () {
-    const path = new Path();
-    path.strokeColor = penroseLineColor;
-    path.strokeWidth = arePenroseLines ? 0 : 0.2;
-    path.moveTo(from);
-    path.lineTo(to);
-    if (isPenroseFill) {
-      path.fillColor =
-        pattern === 4 ? penroseLargeRhombusColor : penroseSmallRhombusColor;
-    }
-  };
 };
 
 const RTriangle = function (side1, side2, side3) {
@@ -38,10 +26,19 @@ const RTriangle = function (side1, side2, side3) {
 
   this.draw = function () {
     const path = new Path();
-    path.strokeColor = penroseLineColor;
-    path.strokeWidth = arePenroseLines ? 0.2 : 0;
+    if (isPenroseFill) {
+      path.strokeWidth = 0.4;
+      path.strokeCap = "round";
+      path.strokeColor =
+        this.pattern === 4
+          ? penroseLargeRhombusColor
+          : penroseSmallRhombusColor;
+    }
+    // path.strokeWidth = arePenroseLines ? 0.2 : 0;
+    // path.strokeWidth = 0.2;
     path.add(this.sides[2].from, this.sides[2].to);
     path.insert(1, this.sides[1].from);
+    path.closed = true;
     if (isPenroseFill) {
       path.fillColor =
         this.pattern === 4
