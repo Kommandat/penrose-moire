@@ -9,26 +9,21 @@
     <link rel="stylesheet" />
     <title>Penrose-Moiré</title>
     <!-- Bootstrap -->
-    <!-- Latest compiled and minified CSS -->
+    <!-- Load Bootstrap -->
     <link
       rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-      integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+      integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
       crossorigin="anonymous"
     />
-
-    <!-- Optional theme -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"
-      integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ"
-      crossorigin="anonymous"
-    />
-
-    <!-- Latest compiled and minified JavaScript -->
     <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
-      integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+      integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
       crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="style.css" />
@@ -45,18 +40,57 @@
       src="https://kit.fontawesome.com/b9b02aa7a0.js"
       crossorigin="anonymous"
     ></script>
-    <!-- <script type="text/javascript" src="icon.js"></script> -->
   </head>
-  <body class="anchor">
+  <body class="anchor font-weight-light">
     <canvas id="canvas" resize="true"></canvas>
     <div class="menubar vertical-menu">
       <i class="fas fa-plus elastic-fai-md menuicon vertical-icon"></i>
       <i class="fas fa-minus elastic-fai-md menuicon vertical-icon"></i>
     </div>
     <div class="navbar menubar">
-      <i class="nav-link fas fa-info elastic-fai-md menuicon"></i>
+      <i
+        class="nav-link fas fa-info elastic-fai-md menuicon data"
+        data-toggle="modal"
+        data-target="#infoModal"
+      ></i>
       <i class="fas fa-palette elastic-fai-md menuicon"></i>
       <i class="fas fa-hand-rock elastic-fai-md menuicon"></i>
+    </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="infoModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">About Penrose-Moiré</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true"> ×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p class="infotext">
+              A Penrose tiling is an infinite tiling without translational symmetry. This Penrose tiling has only two shapes (a small  and large rhombus) but never repeats. Visually, you can see this by layering two tilings over each other and seeing where the colors don't match.
+              </p> 
+              <img class='rounded float-left' style='max-width:100%; height: auto; padding: 20px 0px 20px;' src='overlapping-penrose.jpg' alt='Overlapping Penrose tilings'></img>
+
+              <p class="infotext"> Above are two overlapping penrose tiles, and the pink and dark teal colors are visible where the tilings don't match. The pattern that emerges from layering two tilings is called a Moiré pattern. Check out the links below to learn more:</p>
+              <ul class="list-group list-group-flush infotext">
+                <li class="list-group-item"> <a href="https://www.youtube.com/watch?v=48sCx-wBs34">The Infinite Pattern That Never Repeats — Veritasium</a></li>
+                <li class="list-group-item"> <a href='https://www.youtube.com/watch?v=cvWF_Q5-Kt8'>Incredible Moiré Patterns — The Royal Institution</a></li>
+              </ul>
+              <div class="modal-footer" style="font-size: 14px">
+              <p> Any issues? Please contact me at <a href = "mailto: me@myinitialsare.la">me@myinitialsare.la</a></p>
+              <p> Check out my other projects at <a href = "https://www.myinitialsare.la">myinitialsare.la</a></p>
+              <p> Find the code on <a href = "https://github.com/Kommandat/penrose-moire">Github</a></p>
+              </div>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
