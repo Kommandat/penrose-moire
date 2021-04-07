@@ -184,6 +184,8 @@ function onKeyUp(event) {
 }
 
 function deflatePenroseTilings() {
+  var staticLayerPosition = staticLayer.position;
+
   firstPenrose.deflate();
 
   var draggableLayerPosition = draggableLayer.position;
@@ -198,6 +200,8 @@ function deflatePenroseTilings() {
 
   staticLayer.addChild(staticImage);
   draggableImage = staticImage.copyTo(draggableLayer);
+
+  staticLayer.position = staticLayerPosition;
   draggableLayer.position = draggableLayerPosition;
 }
 
@@ -214,18 +218,22 @@ minViewDimension = Math.max(view.viewSize.width, view.viewSize.height);
 width = minViewDimension / 2.5;
 length = width * (2 / 3);
 basePoint = new Point(width / 6, width * (2 / 3));
+tilingOffset = [Math.cos((2 * PI) / 5) * length, 0];
 
+var staticLayer = new Layer();
 firstPenrose = new PenroseTiling(view.center, length, 3);
 firstPenrose.draw();
+staticLayer.position -= tilingOffset;
 
-var staticLayer = project.layers[0];
 var draggableLayer = new Layer();
 
 secondPenrose = new PenroseTiling(view.center, length, 3);
 secondPenrose.draw();
-draggableLayer.position += unitPoint((3 * PI) / 10) * (width / 3);
+draggableLayer.position += tilingOffset;
 
-deflatePenroseTilings();
+for (let i = 0; i < 9; i++) {
+  deflatePenroseTilings();
+}
 
 staticLayer.blendMode = "color";
 draggableLayer.blendMode = "color";
