@@ -197,8 +197,28 @@ function deflatePenroseTilings() {
 
   staticLayer.position = staticLayerPosition;
   draggableLayer.position = draggableLayerPosition;
+}
 
-  document.getElementById("loading-spinner").style.display = "none";
+function resetPenroseTilings() {
+  var staticLayerPosition = staticLayer.position;
+
+  firstPenrose = new PenroseTiling(view.center, length, 3);
+
+  var draggableLayerPosition = draggableLayer.position;
+  project.layers.forEach((layer) => layer.removeChildren());
+
+  staticLayer.activate();
+  firstPenrose.draw();
+
+  var staticImage = staticLayer.rasterize();
+
+  project.layers.forEach((layer) => layer.removeChildren());
+
+  staticLayer.addChild(staticImage);
+  draggableImage = staticImage.copyTo(draggableLayer);
+
+  staticLayer.position = staticLayerPosition;
+  draggableLayer.position = draggableLayerPosition;
 }
 
 function onResize(event) {
@@ -229,6 +249,7 @@ draggableLayer.position += tilingOffset;
 
 deflatePenroseTilings();
 globals.deflate = deflatePenroseTilings;
+globals.resetDeflation = resetPenroseTilings;
 
 staticLayer.blendMode = "color";
 draggableLayer.blendMode = "color";

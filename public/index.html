@@ -50,10 +50,11 @@
       // To avoid race problem, the following should not be in window.onload as the PaperScript might run before.
       window.globals = {}
       window.globals.deflate = function() {
-        console.log('Initial deflate function defined');
+        console.log('Deflate function not set in PaperScript yet');
       };
-
-
+      window.globals.resetDeflation = function() {
+        console.log('Reset deflation function not set in PaperScript yet');
+      };
 
       // Update the path from the JavaScript code.
       window.onload = function() {
@@ -61,29 +62,60 @@
         $('#infoModal').modal(options={})
       }
 
-      let deflationLevel = 0;
+      let deflationLevel = 1;
       const deflate = function() {
 
         document.getElementById('deflate-info-alert').style.display = 'none';
 
-        if(deflationLevel < 8) {
+        if(deflationLevel < 9) {
          deflationLevel++;
          document.getElementById('loading-spinner').style.display = 'inline-block';
          requestAnimationFrame(() => {
           requestAnimationFrame(() => {
             window.globals.deflate();
+            document.getElementById("loading-spinner").style.display = "none";
           });
         });     
         } else {
           document.getElementById('deflate-info-alert').innerHTML = 'Max tiling level reached';
           document.getElementById('deflate-info-alert').style.display = 'inline-block';
+
+          setTimeout( () => {
+            document.getElementById('deflate-info-alert').style.display = 'none'; 
+          }, 2000);
         }
       }
+
+      const inflate = function() {
+        document.getElementById('deflate-info-alert').style.display = 'none';
+
+        if(deflationLevel > 1) {
+         deflationLevel--;
+         document.getElementById('loading-spinner').style.display = 'inline-block';
+         requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            window.globals.resetDeflation();
+            for(let i = 0; i < deflationLevel; i++) {
+              window.globals.deflate();
+            }
+            document.getElementById("loading-spinner").style.display = "none";
+          });
+        });     
+        } else {
+          document.getElementById('deflate-info-alert').innerHTML = 'Min tiling level reached';
+          document.getElementById('deflate-info-alert').style.display = 'inline-block';
+
+          setTimeout( () => {
+            document.getElementById('deflate-info-alert').style.display = 'none'; 
+          }, 2000);
+        }
+      }
+
     </script>
 
     <div id='deflate-menu' class="menubar vertical-menu">
       <i id="deflate-icon" onclick="deflate()" class="fas fa-plus elastic-fai-md menuicon vertical-icon"></i>
-      <i class="fas fa-minus elastic-fai-md menuicon vertical-icon"></i>
+      <i onclick="inflate()" class="fas fa-minus elastic-fai-md menuicon vertical-icon"></i>
     </div>
     <div id='deflate-menu' class="menubar vertical-menu-popovers">
       <div id='deflate-info-alert' class="alert alert-info" role="alert">
