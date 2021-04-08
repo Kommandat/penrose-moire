@@ -53,15 +53,20 @@
         console.log('Initial deflate function defined');
       };
 
+
+
       // Update the path from the JavaScript code.
       window.onload = function() {
         // Show Modal
         $('#infoModal').modal(options={})
-      };
+      }
 
       let deflationLevel = 0;
       const deflate = function() {
-        if(deflationLevel >= 0 & deflationLevel < 8) {
+
+        document.getElementById('deflate-info-alert').style.display = 'none';
+
+        if(deflationLevel < 8) {
          deflationLevel++;
          document.getElementById('loading-spinner').style.display = 'inline-block';
          requestAnimationFrame(() => {
@@ -69,13 +74,21 @@
             window.globals.deflate();
           });
         });     
-        }        
+        } else {
+          document.getElementById('deflate-info-alert').innerHTML = 'Max tiling level reached';
+          document.getElementById('deflate-info-alert').style.display = 'inline-block';
+        }
       }
     </script>
 
-    <div class="menubar vertical-menu">
-      <i onclick="deflate()" class="fas fa-plus elastic-fai-md menuicon vertical-icon"></i>
+    <div id='deflate-menu' class="menubar vertical-menu">
+      <i id="deflate-icon" onclick="deflate()" class="fas fa-plus elastic-fai-md menuicon vertical-icon"></i>
       <i class="fas fa-minus elastic-fai-md menuicon vertical-icon"></i>
+    </div>
+    <div id='deflate-menu' class="menubar vertical-menu-popovers">
+      <div id='deflate-info-alert' class="alert alert-info" role="alert">
+        Use these to adjust the tiling level
+      </div>
     </div>
     <div class="navbar menubar">
       <i

@@ -45,6 +45,12 @@ canvas[resize] {
   align-items: baseline;
 }
 
+.vertical-menu-popovers {
+  left: 3vw;
+  flex-direction: column;
+  align-items: baseline;
+}
+
 .vertical-icon {
   padding: 0px 0px 20px 0px;
 }
@@ -63,7 +69,7 @@ canvas[resize] {
 }
 
 .elastic-fai-md {
-  font-size: 10vw;
+  font-size: 3vw;
 }
 
 @media (min-width: 320px) {
@@ -71,11 +77,17 @@ canvas[resize] {
   .elastic-fai-md {
     font-size: 7vw;
   }
+  .vertical-menu-popovers {
+    left: 14vw;
+  }
 }
 @media (min-width: 481px) {
   /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
   .elastic-fai-md {
     font-size: 7vw;
+  }
+  .vertical-menu-popovers {
+    left: 14vw;
   }
 }
 @media (min-width: 641px) {
@@ -83,11 +95,17 @@ canvas[resize] {
   .elastic-fai-md {
     font-size: 5vw;
   }
+  .vertical-menu-popovers {
+    left: 10vw;
+  }
 }
 @media (min-width: 961px) {
   /* tablet, landscape iPad, lo-res laptops ands desktops */
   .elastic-fai-md {
     font-size: 4vw;
+  }
+  .vertical-menu-popovers {
+    left: 8vw;
   }
 }
 @media (min-width: 1025px) {
@@ -95,10 +113,16 @@ canvas[resize] {
   .elastic-fai-md {
     font-size: 4vw;
   }
+  .vertical-menu-popovers {
+    left: 8vw;
+  }
 }
 @media (min-width: 1281px) {
   /* hi-res laptops and desktops */
   .elastic-fai-md {
     font-size: 3vw;
+  }
+  .vertical-menu-popovers {
+    left: 6vw;
   }
 }
