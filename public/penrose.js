@@ -226,6 +226,12 @@ function onResize(event) {
   draggableLayer.position += event.delta / 2;
 }
 
+function setZoom() {
+  view.zoom = globals.zoomFactor ? globals.zoomFactor : 1;
+}
+
+globals.setZoom = setZoom;
+
 var background = new Path.Rectangle(view.bounds);
 background.fillColor = "white";
 
