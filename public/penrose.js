@@ -231,9 +231,7 @@ secondPenrose = new PenroseTiling(view.center, length, 3);
 secondPenrose.draw();
 draggableLayer.position += tilingOffset;
 
-for (let i = 0; i < 9; i++) {
-  deflatePenroseTilings();
-}
+deflatePenroseTilings();
 
 staticLayer.blendMode = "color";
 draggableLayer.blendMode = "color";
