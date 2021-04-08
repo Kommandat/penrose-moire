@@ -177,12 +177,6 @@ function onMouseDrag(event) {
   draggableLayer.position += event.delta;
 }
 
-function onKeyUp(event) {
-  if (event.key === "space") {
-    deflatePenroseTilings();
-  }
-}
-
 function deflatePenroseTilings() {
   var staticLayerPosition = staticLayer.position;
 
@@ -203,6 +197,8 @@ function deflatePenroseTilings() {
 
   staticLayer.position = staticLayerPosition;
   draggableLayer.position = draggableLayerPosition;
+
+  document.getElementById("loading-spinner").style.display = "none";
 }
 
 function onResize(event) {
@@ -232,6 +228,7 @@ secondPenrose.draw();
 draggableLayer.position += tilingOffset;
 
 deflatePenroseTilings();
+globals.deflate = deflatePenroseTilings;
 
 staticLayer.blendMode = "color";
 draggableLayer.blendMode = "color";

@@ -50,18 +50,31 @@
       // To avoid race problem, the following should not be in window.onload as the PaperScript might run before.
       window.globals = {}
       window.globals.deflate = function() {
-        console.log('HI');
+        console.log('Initial deflate function defined');
       };
-      window.globals.deflate();
+
       // Update the path from the JavaScript code.
       window.onload = function() {
         // Show Modal
         $('#infoModal').modal(options={})
       };
+
+      let deflationLevel = 0;
+      const deflate = function() {
+        if(deflationLevel >= 0 & deflationLevel < 8) {
+         deflationLevel++;
+         document.getElementById('loading-spinner').style.display = 'inline-block';
+         requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            window.globals.deflate();
+          });
+        });     
+        }        
+      }
     </script>
 
     <div class="menubar vertical-menu">
-      <i class="fas fa-plus elastic-fai-md menuicon vertical-icon"></i>
+      <i onclick="deflate()" class="fas fa-plus elastic-fai-md menuicon vertical-icon"></i>
       <i class="fas fa-minus elastic-fai-md menuicon vertical-icon"></i>
     </div>
     <div class="navbar menubar">
@@ -73,6 +86,9 @@
     </div>
       <canvas id="canvas" resize="true"></canvas>
       <!-- Modal -->
+      <div id='loading-spinner' class="spinner-border loading-spinner" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
       <div class="modal fade" id="infoModal">
         <div class="modal-dialog">
           <div class="modal-content">
