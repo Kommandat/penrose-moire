@@ -174,7 +174,12 @@ const PenroseTiling = function (basePoint, length, pattern) {
 };
 
 function onMouseDrag(event) {
-  draggableLayer.position += event.delta;
+  if (globals.dragType === "dragTiling") {
+    draggableLayer.position += event.delta;
+  } else {
+    staticLayer.position += event.delta;
+    draggableLayer.position += event.delta;
+  }
 }
 
 function deflatePenroseTilings() {

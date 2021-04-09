@@ -59,6 +59,7 @@
         console.log('Set zoom function not set in PaperScript yet');
       };
       window.globals.zoomFactor = 1;
+      window.globals.dragType = 'dragTiling';
 
       // Update the path from the JavaScript code.
       window.onload = function() {
@@ -162,6 +163,14 @@
       });
       }
 
+      const toggleDrag = function() {
+        const dragIcon = document.getElementById('dragIcon');
+        console.log(dragIcon.classList);
+        dragIcon.classList.toggle("fa-hand-rock");
+        dragIcon.classList.toggle("fa-arrows-alt"); 
+        window.globals.dragType = window.globals.dragType === 'dragTiling' ? 'paneWindow' : 'dragTiling';
+      }
+
     </script>
 
     <div id='deflate-menu' class="menubar vertical-menu">
@@ -183,6 +192,11 @@
       class="nav-link fas fa-palette elastic-fai-md menuicon data"
       data-toggle="modal"
       data-target="#paletteModal"
+      ></i>
+      <i
+      id='dragIcon'
+      class="nav-link fas fa-hand-rock elastic-fai-md menuicon data"
+      onClick='toggleDrag()'
       ></i>
     </div>
       <canvas id="canvas" resize="true"></canvas>
@@ -212,7 +226,6 @@
               A Penrose tiling is an infinite tiling without translational symmetry. This Penrose tiling has only two shapes (a small  and large rhombus) but never repeats. Visually, you can see this by layering two tilings over each other and seeing where the colors don't match.
               </p> 
               <img class='rounded float-left' style='max-width:100%; height: auto; padding: 20px 0px 20px;' src='overlapping-penrose.jpg' alt='Overlapping Penrose tilings'></img>
-
               <p class="infotext"> Above are two overlapping Penrose tilings. The pink and dark teal colors are visible where the tilings don't match. The pattern that emerges from layering two tilings is called a Moiré pattern. Check out the links below to learn more:</p>
               <ul class="list-group list-group-flush infotext">
                 <li class="list-group-item"> <a href="https://www.youtube.com/watch?v=48sCx-wBs34">The Infinite Pattern That Never Repeats — Veritasium</a></li>
