@@ -6,8 +6,8 @@ const unitPoint = (angle) => new Point(Math.cos(angle), Math.sin(angle));
 var arePenroseLines = false;
 var penroseLineColor = new Color(0, 0, 0, 0);
 var isPenroseFill = true;
-var penroseLargeRhombusColor = "#1EE69C";
-var penroseSmallRhombusColor = "#9C3E16";
+globals.penroseLargeRhombusColor = "#1EE69C";
+globals.penroseSmallRhombusColor = "#9C3E16";
 
 const RSide = function (from, to, pattern) {
   this.from = from;
@@ -31,8 +31,8 @@ const RTriangle = function (side1, side2, side3) {
       path.strokeCap = "round";
       path.strokeColor =
         this.pattern === 4
-          ? penroseLargeRhombusColor
-          : penroseSmallRhombusColor;
+          ? globals.penroseLargeRhombusColor
+          : globals.penroseSmallRhombusColor;
     }
     // path.strokeWidth = arePenroseLines ? 0.2 : 0;
     // path.strokeWidth = 0.2;
@@ -42,8 +42,8 @@ const RTriangle = function (side1, side2, side3) {
     if (isPenroseFill) {
       path.fillColor =
         this.pattern === 4
-          ? penroseLargeRhombusColor
-          : penroseSmallRhombusColor;
+          ? globals.penroseLargeRhombusColor
+          : globals.penroseSmallRhombusColor;
     }
   };
 

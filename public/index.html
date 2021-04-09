@@ -137,7 +137,31 @@
           }, 2000);
         }
       }
-      
+
+      const setLargeRhombusColor = function(color) {
+        window.globals.penroseLargeRhombusColor = color;
+        reset();
+      }
+
+      const setSmallRhombusColor = function(color) {
+        window.globals.penroseSmallRhombusColor = color;
+        reset();
+      }
+
+      const reset = function() {
+        console.log('We here');
+        document.getElementById('loading-spinner').style.display = 'inline-block';
+        requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          window.globals.resetDeflation();
+          for(let i = 0; i < deflationLevel; i++) {
+            window.globals.deflate();
+          }
+          document.getElementById("loading-spinner").style.display = "none";
+        });
+      });
+      }
+
     </script>
 
     <div id='deflate-menu' class="menubar vertical-menu">
@@ -154,6 +178,11 @@
         class="nav-link fas fa-info elastic-fai-md menuicon data"
         data-toggle="modal"
         data-target="#infoModal"
+      ></i>
+      <i
+      class="nav-link fas fa-palette elastic-fai-md menuicon data"
+      data-toggle="modal"
+      data-target="#paletteModal"
       ></i>
     </div>
       <canvas id="canvas" resize="true"></canvas>
@@ -198,5 +227,37 @@
         </div>
       </div>
     </div>
+    <div class="modal fade" id="paletteModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Colors</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true"> ×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class='color-input-container'>
+            <input onChange='setLargeRhombusColor(this.value);' type="color" id="body" name="body" value="#1EE69C">
+            <label class='color-label' for="body">Large Rhombus Color</label>
+            </div>
+            <div class='color-input-container'>
+            <input onChange='setSmallRhombusColor(this.value);' type="color" id="body" name="body" value="#9C3E16">
+            <label class='color-label' for="body">Small Rhombus Color</label>
+            </div>
+            <div class="modal-footer" style="font-size: 14px">
+            <p> Any issues? Please contact me at <a href = "mailto: me@myinitialsare.la">me@myinitialsare.la</a></p>
+            <p> Check out my other projects at <a href = "https://www.myinitialsare.la">myinitialsare.la</a></p>
+            <p> Find the code on <a href = "https://github.com/Kommandat/penrose-moire">Github</a></p>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
    </body>
 </html>

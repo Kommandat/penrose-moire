@@ -72,6 +72,15 @@ canvas[resize] {
   font-size: 3vw;
 }
 
+.color-input-container {
+  display: flex;
+  padding: 10px;
+}
+
+.color-label {
+  padding: 0px 0px 0px 20px;
+}
+
 @media (min-width: 320px) {
   /* smartphones, iPhone, portrait 480x320 phones */
   .elastic-fai-md {
