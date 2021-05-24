@@ -5,7 +5,7 @@ on:
     branches:
       - main
       - master
-      - lakshay_add_readme_translate
+      - lakshay/add_readme_translate
 
 jobs:
   build:
