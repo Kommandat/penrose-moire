@@ -1,14 +1,35 @@
+/*
+ * A paper.js script to display Penrose Tiles using two
+ * Rhombuses.
+ *
+ * Key objects are:
+ *  - RSide = a side of a Robinson Triangle
+ *  - RTriangle = A Robinson triangle (3 RSides)
+ *    - deflate : "deflates" into multiple smaller triangles
+ * 
+ * The deflation algorithm is explained in detail here:
+ *  - https://tartarus.org/~simon/20110412-penrose/penrose.xhtml
+ * 
+ */
+
 const TWO_PI = 2 * Math.PI;
 const PI = Math.PI;
 
+// Returns a Point describing a unit vector with the given angle
 const unitPoint = (angle) => new Point(Math.cos(angle), Math.sin(angle));
 
+// arePenroseLines : Flag to display lines between all tiles
 var arePenroseLines = false;
 var penroseLineColor = new Color(0, 0, 0, 0);
+
+// isPenroseFill : Flag to display 
 var isPenroseFill = true;
+// Color for the Large Rhombus (triangle pattern = 4)
 globals.penroseLargeRhombusColor = "#1EE69C";
+// Color for the Small Rhombus (triangle pattern = 3)
 globals.penroseSmallRhombusColor = "#9C3E16";
 
+// RSide: A side of a Robinson Triangle
 const RSide = function (from, to, pattern) {
   this.from = from;
   this.to = to;
@@ -19,6 +40,7 @@ const RSide = function (from, to, pattern) {
   this.angle = this.vector.angle * (TWO_PI / 360);
 };
 
+// RTriangle: A Robinson Triangle consisting of 3 RSides
 const RTriangle = function (side1, side2, side3) {
   // Sort sides by increasing pattern
   this.sides = [side1, side2, side3].sort((a, b) => a.pattern - b.pattern);
@@ -34,8 +56,6 @@ const RTriangle = function (side1, side2, side3) {
           ? globals.penroseLargeRhombusColor
           : globals.penroseSmallRhombusColor;
     }
-    // path.strokeWidth = arePenroseLines ? 0.2 : 0;
-    // path.strokeWidth = 0.2;
     path.add(this.sides[2].from, this.sides[2].to);
     path.insert(1, this.sides[1].from);
     path.closed = true;
@@ -48,12 +68,11 @@ const RTriangle = function (side1, side2, side3) {
   };
 
   this.deflate = function () {
-    // returns new RobinsonTriangles
+    // returns new Robinson Triangles
     const newTriangles = [];
 
     if (this.pattern === 4) {
       // Create two new points (from & to)
-
       oneSide = this.sides[0];
       twoSide = this.sides[1];
       fourSide = this.sides[2];
@@ -130,7 +149,8 @@ const PenroseTiling = function (basePoint, length, pattern) {
   this.triangles = [];
 
   // Pattern 3 = 10 small triangles
-  // Other pattern is a mix
+  // Pattern 4 = a mix of large and small, and is yet
+  //  to be implemented
   if ((this.pattern = 3)) {
     let p1 = basePoint;
     let p2;
@@ -151,9 +171,7 @@ const PenroseTiling = function (basePoint, length, pattern) {
 
       this.triangles.push(new RTriangle(s1, s2, s3));
     }
-  } else {
   }
-
   this.draw = function () {
     this.triangles.forEach((triangle) => triangle.draw());
   };
@@ -173,6 +191,7 @@ const PenroseTiling = function (basePoint, length, pattern) {
   };
 };
 
+// Move draggable layer on mouse drag
 function onMouseDrag(event) {
   if (globals.dragType === "dragTiling") {
     draggableLayer.position += event.delta;
