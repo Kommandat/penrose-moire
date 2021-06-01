@@ -18,6 +18,10 @@ Visually, you can see how Penrose tilings don't repeat by layering two tilings o
 
 Now try it out yourself at [penrosemoire.com](penrosemoire.com)!
 
+## How did you create the Penrose tilings?
+
+The Penrose tilings are created using a process called deflation. The process is detailed [here](https://tartarus.org/~simon/20110412-penrose/penrose.xhtml), but in short, you start with a simple tiling and increase the number of tiles by breaking up larger tiles into smaller tiles while following some basic rules.
+
 
 
 
